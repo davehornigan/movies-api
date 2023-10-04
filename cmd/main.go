@@ -3,8 +3,8 @@ package main
 import (
 	"context"
 	api "github.com/davehornigan/movies-api"
+	"github.com/davehornigan/movies-api/oas"
 	"github.com/davehornigan/movies-api/pkg/handler"
-	"github.com/gin-gonic/gin"
 	"log"
 	"os"
 	"os/signal"
@@ -16,13 +16,14 @@ func main() {
 	if err != nil {
 		log.Fatalf("cannot load config: %s", err.Error())
 	}
-	gin.SetMode(config.Environment)
 
 	handlers := new(handler.Handler)
 
 	server := new(api.Server)
+	router := handlers.InitRoutes()
+	oas.RegisterHandlersWithBaseURL(router, handlers, "/api")
 	go func() {
-		if err := server.Run(config.ServerPort, handlers.InitRoutes()); err != nil {
+		if err := server.Run(config.ServerPort, router); err != nil {
 			log.Fatalf("error occured while running http server: %s", err.Error())
 		}
 	}()

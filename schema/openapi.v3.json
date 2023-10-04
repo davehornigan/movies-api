@@ -28,8 +28,7 @@
           "in": "query",
           "required": false,
           "schema": {
-            "type": "number",
-            "format": "integer"
+            "type": "integer"
           }
         },
         {
@@ -66,18 +65,15 @@
                   ],
                   "properties": {
                     "page": {
-                      "type": "number",
-                      "format": "integer",
+                      "type": "integer",
                       "default": 1
                     },
                     "totalPages": {
-                      "type": "number",
-                      "format": "integer",
+                      "type": "integer",
                       "default": 1
                     },
                     "totalItems": {
-                      "type": "number",
-                      "format": "integer",
+                      "type": "integer",
                       "default": 0
                     },
                     "items": {
@@ -165,12 +161,11 @@
     "schemas": {
       "MovieId": {
         "description": "The unique identifier of a movie",
-        "type": "string"
+        "type": "integer"
       },
       "MovieDuration": {
         "description": "Movie duration in minutes",
-        "type": "number",
-        "format": "integer",
+        "type": "integer",
         "example": 80
       },
       "MovieRating": {
@@ -234,8 +229,7 @@
         ],
         "properties": {
           "id": {
-            "type": "number",
-            "format": "integer"
+            "type": "integer"
           },
           "name": {
             "type": "string"
@@ -257,8 +251,7 @@
         "type": "object",
         "properties": {
           "id": {
-            "type": "number",
-            "format": "integer"
+            "type": "integer"
           },
           "logo": {
             "type": "string"
@@ -294,8 +287,7 @@
                 "type": "string"
               },
               "budget": {
-                "type": "number",
-                "format": "integer"
+                "type": "integer"
               },
               "overview": {
                 "type": "string"
@@ -310,8 +302,7 @@
                 "type": "string"
               },
               "revenue": {
-                "type": "number",
-                "format": "integer"
+                "type": "integer"
               },
               "popularity": {
                 "type": "number",
