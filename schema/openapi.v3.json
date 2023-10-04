@@ -2,37 +2,137 @@
   "openapi": "3.0.0",
   "info": {
     "version": "1.0.0",
-    "title": "Sample API",
-    "description": "Buy or rent spacecrafts"
+    "title": "Movies API",
+    "description": ""
   },
   "paths": {
-    "/spacecrafts/{spacecraftId}": {
+    "/movies/{listType}": {
       "parameters": [
         {
-          "name": "spacecraftId",
-          "description": "The unique identifier of the spacecraft",
+          "name": "listType",
+          "description": "The movie list type",
           "in": "path",
           "required": true,
           "schema": {
-            "$ref": "#/components/schemas/SpacecraftId"
+            "$ref": "#/components/schemas/MovieListType"
+          }
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "number",
+            "format": "integer"
+          }
+        },
+        {
+          "name": "language",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "countryCode",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
           }
         }
       ],
       "get": {
-        "summary": "Read a spacecraft",
+        "summary": "Get movies list",
         "responses": {
           "200": {
-            "description": "The spacecraft corresponding to the provided `spacecraftId`",
+            "description": "The movies list to the provided `listType`",
             "content": {
               "application/json": {
                 "schema": {
-                  "$ref": "#/components/schemas/Spacecraft"
+                  "type": "object",
+                  "required": [
+                    "page",
+                    "totalPages",
+                    "totalItems",
+                    "items"
+                  ],
+                  "properties": {
+                    "page": {
+                      "type": "number",
+                      "format": "integer",
+                      "default": 1
+                    },
+                    "totalPages": {
+                      "type": "number",
+                      "format": "integer",
+                      "default": 1
+                    },
+                    "totalItems": {
+                      "type": "number",
+                      "format": "integer",
+                      "default": 0
+                    },
+                    "items": {
+                      "type": "array",
+                      "items": {
+                        "$ref": "#/components/schemas/MovieShortResponse"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{id}/details": {
+      "parameters": [
+        {
+          "name": "id",
+          "description": "The unique identifier of the movie",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/MovieId"
+          }
+        },
+        {
+          "name": "language",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        }
+      ],
+      "get": {
+        "summary": "Get movie details",
+        "responses": {
+          "200": {
+            "description": "The movie details to the provided `id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieDetailsResponse"
                 }
               }
             }
           },
           "404": {
-            "description": "No spacecraft found for the provided `spacecraftId`",
+            "description": "No movie found for the provided `id`",
             "content": {
               "application/json": {
                 "schema": {
@@ -57,38 +157,175 @@
   },
   "components": {
     "schemas": {
-      "SpacecraftId": {
-        "description": "The unique identifier of a spacecraft",
+      "MovieId": {
+        "description": "The unique identifier of a movie",
         "type": "string"
       },
-      "Spacecraft": {
+      "MovieDuration": {
+        "description": "Movie duration in minutes",
+        "type": "number",
+        "format": "integer",
+        "example": 80
+      },
+      "MovieRating": {
+        "type": "number",
+        "format": "double",
+        "example": 9.1
+      },
+      "ImagePath": {
+        "description": "https://developer.themoviedb.org/docs/image-basics",
+        "type": "string",
+        "example": "/hash.jpg"
+      },
+      "MovieListType": {
+        "type": "string",
+        "enum": [
+          "popular",
+          "upcoming",
+          "top-rated"
+        ]
+      },
+      "MovieShortResponse": {
         "type": "object",
         "required": [
           "id",
-          "name",
-          "type"
+          "title",
+          "rating",
+          "duration",
+          "isAdult"
         ],
         "properties": {
           "id": {
-            "$ref": "#/components/schemas/SpacecraftId"
+            "$ref": "#/components/schemas/MovieId"
+          },
+          "title": {
+            "type": "string"
+          },
+          "poster": {
+            "$ref": "#/components/schemas/ImagePath"
+          },
+          "rating": {
+            "$ref": "#/components/schemas/MovieRating"
+          },
+          "duration": {
+            "$ref": "#/components/schemas/MovieDuration"
+          },
+          "releaseDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "isAdult": {
+            "type": "boolean",
+            "default": false
+          }
+        }
+      },
+      "Genre": {
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Country": {
+        "type": "object",
+        "properties": {
+          "code": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          }
+        }
+      },
+      "Company": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "number",
+            "format": "integer"
+          },
+          "logo": {
+            "type": "string"
           },
           "name": {
             "type": "string"
           },
-          "type": {
-            "type": "string",
-            "enum": [
-              "capsule",
-              "probe",
-              "satellite",
-              "spaceplane",
-              "station"
-            ]
-          },
-          "description": {
+          "originCountryCode": {
             "type": "string"
           }
         }
+      },
+      "MovieDetailsResponse": {
+        "allOf": [
+          {
+            "$ref": "#/components/schemas/MovieShortResponse"
+          },
+          {
+            "type": "object",
+            "required": [
+              "status",
+              "budget",
+              "overview",
+              "genres",
+              "tagline",
+              "revenue",
+              "popularity",
+              "countries",
+              "companies"
+            ],
+            "properties": {
+              "status": {
+                "type": "string"
+              },
+              "budget": {
+                "type": "number",
+                "format": "integer"
+              },
+              "overview": {
+                "type": "string"
+              },
+              "genres": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Genre"
+                }
+              },
+              "tagline": {
+                "type": "string"
+              },
+              "revenue": {
+                "type": "number",
+                "format": "integer"
+              },
+              "popularity": {
+                "type": "number",
+                "format": "double"
+              },
+              "countries": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Country"
+                }
+              },
+              "companies": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/components/schemas/Company"
+                }
+              }
+            }
+          }
+        ]
       },
       "Error": {
         "type": "object",
@@ -102,18 +339,6 @@
           }
         }
       }
-    },
-    "securitySchemes": {
-      "ApiKey": {
-        "type": "apiKey",
-        "in": "header",
-        "name": "X-Api-Key"
-      }
     }
-  },
-  "security": [
-    {
-      "ApiKey": []
-    }
-  ]
+  }
 }
