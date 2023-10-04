@@ -5,6 +5,12 @@
     "title": "Movies API",
     "description": ""
   },
+  "servers": [
+    {
+      "url": "http://127.0.0.1/api",
+      "description": "Local server"
+    }
+  ],
   "paths": {
     "/movies/{listType}": {
       "parameters": [
