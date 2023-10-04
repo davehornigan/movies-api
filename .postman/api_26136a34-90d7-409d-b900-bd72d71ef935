@@ -13,8 +13,8 @@ rootDirectory = schema
 [config.relations.collections.metaData]
 
 [config.relations.apiDefinition]
-files[] = {"path":"openapi.v3.json","metaData":{}}
+files[] = {"path":"schema/openapi.v3.json","metaData":{}}
 
 [config.relations.apiDefinition.metaData]
 type = openapi:3
-rootFiles[] = openapi.v3.json
+rootFiles[] = schema/openapi.v3.json
