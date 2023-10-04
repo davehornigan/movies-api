@@ -4,11 +4,11 @@ import (
 	"github.com/labstack/echo/v4"
 	"net/http"
 )
-import oas "github.com/davehornigan/movies-api/oas"
+import apiserver "github.com/davehornigan/movies-api/generated/api-server"
 
-func (h *Handler) GetMoviesIdDetails(c echo.Context, id oas.MovieId, params oas.GetMoviesIdDetailsParams) error {
+func (h *Handler) GetMoviesIdDetails(c echo.Context, id apiserver.MovieId, params apiserver.GetMoviesIdDetailsParams) error {
 	return c.String(http.StatusOK, "MovieDetails")
 }
-func (h *Handler) GetMoviesListType(c echo.Context, listType oas.MovieListType, params oas.GetMoviesListTypeParams) error {
+func (h *Handler) GetMoviesListType(c echo.Context, listType apiserver.MovieListType, params apiserver.GetMoviesListTypeParams) error {
 	return c.String(http.StatusOK, "MovieList")
 }

@@ -3,7 +3,7 @@ package main
 import (
 	"context"
 	api "github.com/davehornigan/movies-api"
-	"github.com/davehornigan/movies-api/oas"
+	apiserver "github.com/davehornigan/movies-api/generated/api-server"
 	"github.com/davehornigan/movies-api/pkg/handler"
 	"log"
 	"os"
@@ -21,7 +21,7 @@ func main() {
 
 	server := new(api.Server)
 	router := handlers.InitRoutes()
-	oas.RegisterHandlersWithBaseURL(router, handlers, "/api")
+	apiserver.RegisterHandlersWithBaseURL(router, handlers, "/api")
 	go func() {
 		if err := server.Run(config.ServerPort, router); err != nil {
 			log.Fatalf("error occured while running http server: %s", err.Error())

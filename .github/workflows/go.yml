@@ -25,7 +25,7 @@ jobs:
       run: go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
 
     - name: Generate OpenAPI Server
-      run: oapi-codegen -generate types,echo -package oas schema/openapi.v3.json > oas/api.gen.go
+      run: oapi-codegen -generate types,echo -package oas schema/openapi.v3.json > generated/api-server/api.gen.go
 
     - name: Build
       run: go build -v ./...
