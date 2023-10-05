@@ -27,8 +27,11 @@ jobs:
     - name: Generate OpenAPI Server
       run: oapi-codegen -generate types,echo -package oas schema/openapi.v3.json > generated/api-server/api.gen.go
 
+    - name: Generate TMDB OpenAPI Client
+      run: oapi-codegen -generate types,client -package oas schema/tmdb.oas.v3.json > generated/tmdb/tmdb.gen.go
+
     - name: Build
-      run: go build -v ./...
+      run: go build -o build/movies-api -v cmd/main.go
 
     - name: Test
       run: go test -v ./...
