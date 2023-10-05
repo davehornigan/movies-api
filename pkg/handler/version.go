@@ -5,6 +5,12 @@ import (
 	"net/http"
 )
 
+type Version struct {
+	Version string `json:"version" xml:"version"`
+}
+
 func (h *Handler) version(c echo.Context) error {
-	return c.String(http.StatusOK, "Version")
+	resp := &Version{Version: "1.0"}
+
+	return c.JSON(http.StatusOK, resp)
 }
