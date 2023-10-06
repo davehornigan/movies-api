@@ -6,8 +6,10 @@ import (
 )
 
 type Config struct {
-	ServerPort  string `mapstructure:"SERVER_PORT"`
-	Environment string `mapstructure:"APP_ENV"`
+	ServerPort      string `mapstructure:"SERVER_PORT"`
+	Environment     string `mapstructure:"APP_ENV"`
+	TmdbServer      string `mapstructure:"TMDB_API_SERVER"`
+	TmdbAccessToken string `mapstructure:"TMDB_API_ACCESS_TOKEN"`
 }
 
 func LoadConfig(configFile string) (config Config, err error) {
