@@ -37,6 +37,6 @@ func main() {
 
 	router.Logger.Printf("Server shutdown")
 	if err := server.Shutdown(context.Background()); err != nil {
-		router.Logger.Fatalf("error occured on http server shutdown: %s", err.Error())
+		router.Logger.Fatalf("error occurred on http server shutdown: %s", err.Error())
 	}
 }
