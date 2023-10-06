@@ -29,14 +29,14 @@ func main() {
 		}
 	}()
 
-	log.Printf("Server started on port: %s. Environment: %s", config.ServerPort, config.Environment)
+	router.Logger.Printf("Server started on port: %s. Environment: %s", config.ServerPort, config.Environment)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
 	<-quit
 
-	log.Printf("Server shutdown")
+	router.Logger.Printf("Server shutdown")
 	if err := server.Shutdown(context.Background()); err != nil {
-		log.Fatalf("error occured on http server shutdown: %s", err.Error())
+		router.Logger.Fatalf("error occured on http server shutdown: %s", err.Error())
 	}
 }

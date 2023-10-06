@@ -11,6 +11,7 @@ type Config struct {
 }
 
 func LoadConfig(configFile string) (config Config, err error) {
+	SetDefaults()
 	viper.SetConfigFile(configFile)
 	viper.SetConfigType("env")
 
@@ -22,4 +23,8 @@ func LoadConfig(configFile string) (config Config, err error) {
 
 	err = viper.Unmarshal(&config)
 	return
+}
+
+func SetDefaults() {
+	viper.SetDefault("APP_ENV", "development")
 }
