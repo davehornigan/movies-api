@@ -10,11 +10,9 @@ type Config struct {
 	Environment string `mapstructure:"APP_ENV"`
 }
 
-func LoadConfig(path string) (config Config, err error) {
-	viper.AddConfigPath(path)
-	viper.SetConfigName("config")
-	viper.AddConfigPath(".")
-	viper.SetConfigFile(".env")
+func LoadConfig(configFile string) (config Config, err error) {
+	viper.SetConfigFile(configFile)
+	viper.SetConfigType("env")
 
 	viper.AutomaticEnv()
 

@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	config, err := appConfig.LoadConfig("./configs")
+	config, err := appConfig.LoadConfig(".env")
 	if err != nil {
 		log.Fatalf("cannot load app-config: %s", err.Error())
 	}
@@ -29,7 +29,7 @@ func main() {
 		}
 	}()
 
-	log.Printf("Server started on port: %s", config.ServerPort)
+	log.Printf("Server started on port: %s. Environment: %s", config.ServerPort, config.Environment)
 
 	quit := make(chan os.Signal, 1)
 	signal.Notify(quit, syscall.SIGTERM, syscall.SIGINT)
