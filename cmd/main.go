@@ -13,7 +13,7 @@ import (
 )
 
 func main() {
-	config, err := appConfig.LoadConfig(".")
+	config, err := appConfig.LoadConfig("./configs")
 	if err != nil {
 		log.Fatalf("cannot load app-config: %s", err.Error())
 	}
