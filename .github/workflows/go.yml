@@ -12,6 +12,10 @@ on:
 jobs:
 
   build:
+    permissions:
+      contents: 'read'
+      id-token: 'write'
+
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
@@ -35,3 +39,12 @@ jobs:
 
     - name: Test
       run: go test -v ./...
+
+    - id: 'auth'
+      name: 'Authenticate to Google Cloud'
+      uses: 'google-github-actions/auth@v1'
+      with:
+        credentials_json: '${{ secrets.GOOGLE_CREDENTIALS }}'
+
+    - id: 'deploy'
+      uses: 'google-github-actions/deploy-appengine@v1'

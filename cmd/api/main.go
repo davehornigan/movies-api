@@ -25,7 +25,7 @@ func main() {
 		panic(tokenProviderErr)
 	}
 
-	tmdbClient, _ := tmdb.NewClient(config.TmdbServer, tmdb.WithRequestEditorFn(tokenProvider.Intercept))
+	tmdbClient, _ := tmdb.NewClientWithResponses(config.TmdbServer, tmdb.WithRequestEditorFn(tokenProvider.Intercept))
 	handlers := handler.NewHandler(tmdbClient)
 
 	server := new(rest.Server)

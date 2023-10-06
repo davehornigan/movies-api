@@ -9,10 +9,6 @@ import (
 import apiserver "github.com/davehornigan/movies-api/generated/api-server"
 
 func (h *Handler) GetMoviesListType(c echo.Context, listType apiserver.MovieListType, params apiserver.GetMoviesListTypeParams) error {
-	logrus.Info(listType)
-	logrus.Info(*params.Page)
-	logrus.Info(*params.Language)
-	logrus.Info(*params.CountryCode)
 	var response *http.Response
 	var err error
 	if listType == apiserver.Popular {
@@ -41,6 +37,7 @@ func (h *Handler) GetMoviesListType(c echo.Context, listType apiserver.MovieList
 	if err != nil {
 		return c.JSON(http.StatusInternalServerError, err.Error()) // TODO: Customize error
 	}
+
 	logrus.Info(response)
 
 	return c.String(http.StatusOK, "MovieList")
