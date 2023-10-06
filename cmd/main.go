@@ -2,9 +2,10 @@ package main
 
 import (
 	"context"
-	api "github.com/davehornigan/movies-api"
 	apiserver "github.com/davehornigan/movies-api/generated/api-server"
-	"github.com/davehornigan/movies-api/pkg/handler"
+	appConfig "github.com/davehornigan/movies-api/internal/app-config"
+	"github.com/davehornigan/movies-api/internal/transport/rest"
+	"github.com/davehornigan/movies-api/internal/transport/rest/handler"
 	"log"
 	"os"
 	"os/signal"
@@ -12,14 +13,14 @@ import (
 )
 
 func main() {
-	config, err := api.LoadConfig(".")
+	config, err := appConfig.LoadConfig(".")
 	if err != nil {
-		log.Fatalf("cannot load config: %s", err.Error())
+		log.Fatalf("cannot load app-config: %s", err.Error())
 	}
 
 	handlers := new(handler.Handler)
 
-	server := new(api.Server)
+	server := new(rest.Server)
 	router := handlers.InitRoutes()
 	apiserver.RegisterHandlersWithBaseURL(router, handlers, "/api")
 	go func() {

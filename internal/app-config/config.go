@@ -1,4 +1,4 @@
-package movies_api
+package app_config
 
 import (
 	"github.com/spf13/viper"
@@ -18,7 +18,7 @@ func LoadConfig(path string) (config Config, err error) {
 	viper.AutomaticEnv()
 
 	if err = viper.ReadInConfig(); err != nil {
-		log.Fatalf("read config error: %s", err.Error())
+		log.Fatalf("read app-config error: %s", err.Error())
 	}
 
 	err = viper.Unmarshal(&config)

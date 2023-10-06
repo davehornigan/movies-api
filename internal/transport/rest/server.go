@@ -1,4 +1,4 @@
-package movies_api
+package rest
 
 import (
 	"context"
