@@ -28,17 +28,14 @@ jobs:
     - name: Install oapi-codegen
       run: go install github.com/deepmap/oapi-codegen/cmd/oapi-codegen@latest
 
-    - name: Generate OpenAPI Server
-      run: oapi-codegen -generate types,echo -package api_server schema/openapi.v3.json > generated/api-server/api.gen.go
-
-    - name: Generate TMDB OpenAPI Client
-      run: oapi-codegen -generate types,client -package tmdb schema/tmdb.oas.v3.json > generated/tmdb/tmdb.gen.go
+    - name: Generate OpenAPI Clients/Servers
+      run: make gen
 
     - name: Build
-      run: go build -a -o build/api -v cmd/api/main.go
+      run: make build
 
     - name: Test
-      run: go test -v ./...
+      run: make test
 
     - id: 'auth'
       name: 'Authenticate to Google Cloud'
