@@ -22,6 +22,10 @@ func (h *Handler) GetMoviesIdDetails(c echo.Context, id apiserver.MovieId, param
 		return c.JSON(http.StatusInternalServerError, err.Error()) // TODO: Customize error
 	}
 
+	if response.StatusCode() == http.StatusNotFound {
+		return c.JSON(http.StatusNotFound, "Movie not found")
+	}
+
 	if response.StatusCode() != http.StatusOK {
 		return c.JSON(response.StatusCode(), "External error")
 	}
