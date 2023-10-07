@@ -94,14 +94,13 @@ func GetTopRatedMovies(h *Handler, c echo.Context, params apiserver.GetMoviesLis
 func BuildMovieList(resp *tmdb.MoviePaginated) apiserver.MovieListResponse {
 	movieList := make([]apiserver.MovieShortResponse, 0)
 	for _, movie := range *resp.Results {
-		releaseDateParsed, err := time.Parse("", *movie.ReleaseDate)
+		releaseDateParsed, err := time.Parse(time.DateOnly, *movie.ReleaseDate)
 		var releaseDate *types.Date
 		if err == nil {
 			releaseDate = &types.Date{Time: releaseDateParsed}
 		}
 
 		movieList = append(movieList, apiserver.MovieShortResponse{
-			Duration:    0,
 			Id:          *movie.Id,
 			IsAdult:     *movie.Adult,
 			Poster:      movie.PosterPath,

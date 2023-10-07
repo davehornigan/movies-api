@@ -166,7 +166,6 @@
           "id",
           "title",
           "rating",
-          "duration",
           "isAdult"
         ],
         "properties": {
@@ -181,9 +180,6 @@
           },
           "rating": {
             "$ref": "#/components/schemas/MovieRating"
-          },
-          "duration": {
-            "$ref": "#/components/schemas/MovieDuration"
           },
           "releaseDate": {
             "type": "string",
@@ -250,6 +246,7 @@
               "budget",
               "overview",
               "genres",
+              "duration",
               "tagline",
               "revenue",
               "popularity",
@@ -271,6 +268,9 @@
                 "items": {
                   "$ref": "#/components/schemas/Genre"
                 }
+              },
+              "duration": {
+                "$ref": "#/components/schemas/MovieDuration"
               },
               "tagline": {
                 "type": "string"
