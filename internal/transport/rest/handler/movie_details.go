@@ -30,19 +30,42 @@ func (h *Handler) GetMoviesIdDetails(c echo.Context, id apiserver.MovieId, param
 		return c.JSON(response.StatusCode(), "External error")
 	}
 
+	genres := make([]apiserver.Genre, 0)
+	for _, genre := range *response.JSON200.Genres {
+		genres = append(genres, apiserver.Genre{
+			Id:   *genre.Id,
+			Name: *genre.Name,
+		})
+	}
+	countries := make([]apiserver.Country, 0)
+	for _, country := range *response.JSON200.ProductionCountries {
+		countries = append(countries, apiserver.Country{
+			Code: country.Iso6391,
+			Name: country.Name,
+		})
+	}
+	companies := make([]apiserver.Company, 0)
+	for _, company := range *response.JSON200.ProductionCompanies {
+		companies = append(companies, apiserver.Company{
+			Id:   company.Id,
+			Name: company.Name,
+			Logo: company.LogoPath,
+		})
+	}
+
 	movieDetails := apiserver.MovieDetailsResponse{
 		Budget:      *response.JSON200.Budget,
-		Companies:   nil,
-		Countries:   nil,
+		Companies:   companies,
+		Countries:   countries,
 		Duration:    *response.JSON200.Runtime,
-		Genres:      nil,
+		Genres:      genres,
 		Id:          id,
 		IsAdult:     *response.JSON200.Adult,
 		Overview:    *response.JSON200.Overview,
 		Popularity:  float64(*response.JSON200.Popularity),
 		Poster:      response.JSON200.PosterPath,
 		Rating:      float64(*response.JSON200.VoteAverage),
-		ReleaseDate: nil,
+		ReleaseDate: response.JSON200.ReleaseDate,
 		Revenue:     *response.JSON200.Revenue,
 		Status:      *response.JSON200.Status,
 		Tagline:     *response.JSON200.Tagline,
