@@ -30,7 +30,7 @@ func main() {
 
 	server := new(rest.Server)
 	router := handlers.InitRoutes()
-	apiserver.RegisterHandlersWithBaseURL(router, handlers, "/api")
+	apiserver.RegisterHandlers(router, handlers)
 	go func() {
 		if err := server.Run(config.ServerPort, router); err != nil {
 			logrus.Fatalf("error occured while running http server: %s", err.Error())

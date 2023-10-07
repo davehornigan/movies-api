@@ -35,10 +35,7 @@ func (h *Handler) InitRoutes() *echo.Echo {
 		},
 	}))
 
-	api := router.Group("/api")
-	{
-		api.GET("/version", h.version)
-	}
+	router.GET("/version", h.version)
 
 	return router
 }
