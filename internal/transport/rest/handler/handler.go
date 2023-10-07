@@ -36,6 +36,7 @@ func (h *Handler) InitRoutes() *echo.Echo {
 	}))
 
 	router.GET("/version", h.version)
+	router.Static("/", "./web/static")
 
 	return router
 }
