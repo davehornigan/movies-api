@@ -18,6 +18,7 @@ func NewHandler(tmdbClient tmdb.ClientInterface) *Handler {
 func (h *Handler) InitRoutes() *echo.Echo {
 	router := echo.New()
 	log := logrus.New()
+	router.Use(middleware.CORS())
 	router.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
 		LogURI:    true,
 		LogStatus: true,
