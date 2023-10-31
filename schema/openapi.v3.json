@@ -179,8 +179,17 @@
           "poster": {
             "$ref": "#/components/schemas/ImagePath"
           },
+          "backdrop": {
+            "$ref": "#/components/schemas/ImagePath"
+          },
           "rating": {
             "$ref": "#/components/schemas/MovieRating"
+          },
+          "genreIds": {
+            "type": "array",
+            "items": {
+              "type": "integer"
+            }
           },
           "releaseDate": {
             "type": "string",
