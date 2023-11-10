@@ -51,7 +51,7 @@ func (h *Handler) GetMoviesIdVideos(c echo.Context, id apiserver.MovieId, params
 			continue
 		}
 
-		PublicationTimeParsed, err := time.Parse(time.DateTime, *video.PublishedAt)
+		PublicationTimeParsed, err := time.Parse(time.RFC3339, *video.PublishedAt)
 		var publicationDate *types.Date
 		if err == nil {
 			publicationDate = &types.Date{Time: PublicationTimeParsed}
