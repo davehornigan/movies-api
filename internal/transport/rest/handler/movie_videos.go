@@ -63,7 +63,7 @@ func (h *Handler) GetMoviesIdVideos(c echo.Context, id apiserver.MovieId, params
 			Type:            videoType,
 			Size:            *video.Size,
 			IsOfficial:      *video.Official,
-			PublicationDate: *publicationDate,
+			PublicationDate: publicationDate,
 		})
 	}
 
