@@ -1,7 +1,7 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.1",
+    "version": "1.0.2",
     "title": "Movies API",
     "description": ""
   },
@@ -166,6 +166,78 @@
           }
         }
       }
+    },
+    "/movies/{id}/videos": {
+      "parameters": [
+        {
+          "name": "id",
+          "description": "The unique identifier of the movie",
+          "in": "path",
+          "required": true,
+          "schema": {
+            "$ref": "#/components/schemas/MovieId"
+          }
+        },
+        {
+          "name": "language",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "types",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/VideoType"
+            },
+            "default": [
+              "Trailer"
+            ]
+          },
+          "style": "form",
+          "explode": false
+        }
+      ],
+      "get": {
+        "summary": "Get movie details",
+        "responses": {
+          "200": {
+            "description": "The movie videos to the provided `id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieVideosResponse"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "No movie found for the provided `id`",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
     }
   },
   "components": {
@@ -237,6 +309,71 @@
             "default": false
           }
         }
+      },
+      "MovieVideosResponse": {
+        "type": "object",
+        "required": [
+          "id",
+          "results"
+        ],
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "results": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/MovieVideo"
+            }
+          },
+          "type": {
+            "$ref": "#/components/schemas/VideoType"
+          }
+        }
+      },
+      "MovieVideo": {
+        "type": "object",
+        "required": [
+          "name",
+          "key",
+          "size",
+          "type",
+          "publicationDate",
+          "isOfficial"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "key": {
+            "type": "string"
+          },
+          "size": {
+            "type": "integer"
+          },
+          "publicationDate": {
+            "type": "string",
+            "format": "date"
+          },
+          "type": {
+            "$ref": "#/components/schemas/VideoType"
+          },
+          "isOfficial": {
+            "type": "boolean"
+          }
+        }
+      },
+      "VideoType": {
+        "type": "string",
+        "enum": [
+          "Trailer",
+          "Teaser",
+          "Featurette",
+          "Bloopers",
+          "Behind the Scenes",
+          "Opening Credits",
+          "Clip"
+        ]
       },
       "Genre": {
         "type": "object",

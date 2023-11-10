@@ -6911,7 +6911,7 @@
                         "in": "path",
                         "required": true,
                         "schema": {
-                            "type": "string"
+                            "type": "integer"
                         }
                     },
                     {
@@ -18528,6 +18528,12 @@
                             "Behind the Scenes",
                             "Bloopers"
                         ]
+                    },
+                    "official": {
+                        "type": "boolean"
+                    },
+                    "published_at": {
+                        "type": "string"
                     }
                 }
             },
