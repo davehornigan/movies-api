@@ -10,5 +10,10 @@ handlers:
   - url: /.*
     script: auto
 instance_class: F1
-basic_scaling:
+automatic_scaling:
   max_instances: 1
+  min_instances: 0
+  max_idle_instances: 1
+  target_cpu_utilization: 0.95
+  target_throughput_utilization: 0.95
+  min_pending_latency: 5000ms
