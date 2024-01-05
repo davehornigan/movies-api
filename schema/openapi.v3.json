@@ -1,17 +1,452 @@
 {
   "openapi": "3.0.0",
   "info": {
-    "version": "1.0.2",
+    "version": "1.0.3",
     "title": "Movies API",
     "description": ""
   },
   "servers": [
     {
-      "url": "http://127.0.0.1",
+      "url": "http://127.0.0.1:8000",
       "description": "Local server"
     }
   ],
   "paths": {
+    "/discover/movies": {
+      "parameters": [
+        {
+          "name": "certification",
+          "description": "use in conjunction with `region`",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "certification.gte",
+          "description": "use in conjunction with `region`",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "certification.lte",
+          "description": "use in conjunction with `region`",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "certificationCountry",
+          "description": "use in conjunction with the `certification`, `certification.gte` and `certification.lte` filters",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "includeAdult",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        {
+          "name": "includeVideo",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "boolean",
+            "default": false
+          }
+        },
+        {
+          "name": "language",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "default": "en-US"
+          }
+        },
+        {
+          "name": "page",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32",
+            "default": 1
+          }
+        },
+        {
+          "name": "primaryReleaseYear",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 1000,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "primaryReleaseDate.gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "name": "primaryReleaseDate.lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "name": "region",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "pattern": "^[A-Z]{2}$"
+          }
+        },
+        {
+          "name": "releaseDate.gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "name": "releaseDate.lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string",
+            "format": "date"
+          }
+        },
+        {
+          "name": "voteAverage.gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          }
+        },
+        {
+          "name": "voteAverage.lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          }
+        },
+        {
+          "name": "voteCount.gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          }
+        },
+        {
+          "name": "voteCount.lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 0,
+            "type": "number",
+            "format": "float"
+          }
+        },
+        {
+          "name": "watchRegion",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "string"
+          }
+        },
+        {
+          "name": "withCastCondition",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FilterCondition"
+          }
+        },
+        {
+          "name": "withCast",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withCompaniesCondition",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FilterCondition"
+          }
+        },
+        {
+          "name": "withCompanies",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withCrewCondition",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FilterCondition"
+          }
+        },
+        {
+          "name": "withCrew",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withGenresCondition",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FilterCondition"
+          }
+        },
+        {
+          "name": "withGenres",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withKeywordsCondition",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FilterCondition"
+          }
+        },
+        {
+          "name": "withKeywords",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withOriginCountry",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withOriginalLanguage",
+          "description": "Short format without region",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withPeopleCondition",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/FilterCondition"
+          }
+        },
+        {
+          "name": "withPeople",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withRuntime.gte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "withRuntime.lte",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "withWatchMonetizationTypes",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/WatchMonetizationType"
+            }
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withWatchProviders",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withoutCompanies",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withoutGenres",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withoutKeywords",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "withoutWatchProviders",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/ArrayString"
+          },
+          "style": "form",
+          "explode": false
+        },
+        {
+          "name": "year",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "minimum": 1000,
+            "type": "integer",
+            "format": "int32"
+          }
+        },
+        {
+          "name": "sortBy",
+          "in": "query",
+          "required": false,
+          "schema": {
+            "$ref": "#/components/schemas/SortBy"
+          },
+          "style": "deepObject"
+        }
+      ],
+      "get": {
+        "summary": "Get movies discovery",
+        "responses": {
+          "200": {
+            "description": "The movies list by filters",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/MovieListResponse"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Unexpected error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/genres/movies": {
       "parameters": [
         {
@@ -523,6 +958,58 @@
             }
           }
         }
+      },
+      "WatchMonetizationType": {
+        "type": "string",
+        "enum": [
+          "flatrate",
+          "free",
+          "ads",
+          "rent",
+          "buy"
+        ]
+      },
+      "FilterCondition": {
+        "type": "string",
+        "enum": [
+          "AND",
+          "OR"
+        ],
+        "default": "AND"
+      },
+      "ArrayString": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "SortBy": {
+        "type": "object",
+        "additionalProperties": false,
+        "properties": {
+          "order": {
+            "$ref": "#/components/schemas/SortOrder"
+          },
+          "option": {
+            "$ref": "#/components/schemas/SortOption"
+          }
+        }
+      },
+      "SortOption": {
+        "type": "string",
+        "enum": [
+          "popularity",
+          "rating",
+          "release_date",
+          "title"
+        ]
+      },
+      "SortOrder": {
+        "type": "string",
+        "enum": [
+          "asc",
+          "desc"
+        ]
       },
       "Error": {
         "type": "object",
