@@ -1,3 +1,5 @@
+name: Deploy image to server
+
 on:
   workflow_call:
     inputs:
@@ -31,15 +33,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Pass the received secret to an action
-        uses: davehornigan/movies-api/.github/workflows/deploy.yaml
-        with:
-          ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
-          ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
-          api-port: ${{ vars.SERVER_PORT }}
-          tmdb-api-host: ${{ vars.API_SERVER }}
-        secrets: inherit
-
       - uses: actions/checkout@v2
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v1.0.2

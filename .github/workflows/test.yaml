@@ -1,0 +1,19 @@
+name: Test
+
+on:
+  pull_request:
+    branches:
+      - master
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pass the received secret to an action
+        uses: davehornigan/movies-api/.github/workflows/deploy.yaml
+        with:
+          ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
+          ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
+          api-port: ${{ vars.SERVER_PORT }}
+          tmdb-api-host: ${{ vars.API_SERVER }}
+        secrets: inherit
