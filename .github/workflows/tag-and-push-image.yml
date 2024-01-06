@@ -6,9 +6,9 @@ name: Tag and Push Image
 on:
   push:
     branches:
-     - master
+      - "**"
     tags:
-      - '*'
+      - "*.*.*"
   pull_request:
     branches:
       - master
