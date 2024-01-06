@@ -3,7 +3,7 @@ name: Build and push docker image
 on:
   workflow_dispatch:
   workflow_run:
-    workflows: ["Tag and Push Image"]
+    workflows: ["Create Tag and Release"]
     types: [requested]
     branches:
       - 'releases/**'
