@@ -33,7 +33,7 @@ jobs:
             type=semver,pattern={{major}}
 
   test:
-    if: ${{ needs.meta.outputs.image-tag != '' }}
+    if: ${{ needs.meta.outputs.image-tags != '' }}
     name: Pass the received secret to an action
     uses: ./.github/workflows/deploy.yaml
     needs:
