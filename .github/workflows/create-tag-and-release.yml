@@ -41,6 +41,7 @@ jobs:
 
     - name: Commit changes
       if: ${{ github.event_name != 'pull_request' }}
+      id: update_version
       continue-on-error: false
       uses: test-room-7/action-update-file@v1
       with:
@@ -54,6 +55,7 @@ jobs:
       continue-on-error: false
       uses: mathieudutour/github-tag-action@v6.1
       with:
+        commit_sha: ${{ steps.update_version.outputs.commit-sha }}
         tag_prefix: ''
         github_token: ${{ secrets.PAT }}
         custom_tag: ${{ steps.calculate_version.outputs.new_tag }}
