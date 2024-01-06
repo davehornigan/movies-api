@@ -1,5 +1,8 @@
 run:
+	make local-config
 	go run cmd/api/main.go
+local-config:
+	@if [[ ! -f .env ]]; then cp .env.dist .env; fi;
 build:
 	go build -v -o build/api cmd/api/main.go
 gen:
