@@ -31,6 +31,7 @@ jobs:
             type=semver,pattern={{major}}
 
   test:
+    if: ${{ needs.build-and-push-image.outputs.image-tag != '' }}
     name: Pass the received secret to an action
     uses: ./.github/workflows/deploy.yaml
     needs:
