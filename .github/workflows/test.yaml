@@ -15,7 +15,7 @@ jobs:
       ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
       api-port: ${{ vars.SERVER_PORT }}
       tmdb-api-host: ${{ vars.API_SERVER }}
-    secrets:
-      TMDB_API_ACCESS_TOKEN: ${{ secrets.TMDB_API_ACCESS_TOKEN }}
-      PUBLISH_SERVER_HOST: ${{ secrets.PUBLISH_SERVER_HOST }}
-      PUBLISH_SSH_PRIVATE_KEY: ${{ secrets.PUBLISH_SSH_PRIVATE_KEY }}
+    secrets: inherit
+#      TMDB_API_ACCESS_TOKEN: ${{ secrets.TMDB_API_ACCESS_TOKEN }}
+#      PUBLISH_SERVER_HOST: ${{ secrets.PUBLISH_SERVER_HOST }}
+#      PUBLISH_SSH_PRIVATE_KEY: ${{ secrets.PUBLISH_SSH_PRIVATE_KEY }}
