@@ -1,0 +1,58 @@
+on:
+  workflow_call:
+    inputs:
+      image:
+        required: true
+        type: string
+      ssh-user:
+        required: true
+        type: string
+      ssh-port:
+        required: true
+        type: number
+      api-port:
+        required: true
+        type: number
+      tmdb-api-host:
+        required: true
+        type: string
+    secrets:
+      TMDB_API_ACCESS_TOKEN:
+        required: true
+        description: TheMovieDatabase Access Token
+      PUBLISH_SERVER_HOST:
+        required: true
+        description: Remote SSH server host
+      PUBLISH_SSH_PRIVATE_KEY:
+        required: true
+        description: Private SSH key with access to SSH server
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Pass the received secret to an action
+        uses: davehornigan/movies-api/.github/workflows/deploy.yaml
+        with:
+          ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
+          ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
+          api-port: ${{ vars.SERVER_PORT }}
+          tmdb-api-host: ${{ vars.API_SERVER }}
+        secrets: inherit
+
+      - uses: actions/checkout@v2
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v1.0.2
+        with:
+          host: ${{ secrets.ssh-host }}
+          username: ${{ secrets.ssh-user }}
+          port: ${{ secrets.ssh-port }}
+          key: ${{ secrets.PUBLISH_SSH_PRIVATE_KEY }}
+          script: |
+            cd /opt/movies
+            echo "SERVER_PORT=${{ inputs.api-port }}" > .env
+            echo "TMDB_API_SERVER=${{ inputs.tmdb-api-host }}" >> .env
+            echo "TMDB_API_ACCESS_TOKEN=${{ secret.TMDB_API_ACCESS_TOKEN }}" >> .env
+            docker pull ${{ inputs.image }}
+            yq e '.services.movies.image = "${{ inputs.image }}"' -i docker-compose.yaml
+            docker compose up movies -d --force-recreate
