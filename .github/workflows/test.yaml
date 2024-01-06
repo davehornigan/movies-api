@@ -11,9 +11,10 @@ jobs:
     uses: ./.github/workflows/deploy.yaml
     with:
       image: ghcr.io/davehornigan/movies-api:1.0.11
+      ssh-host: ${{ vars.PUBLISH_SERVER_HOST }}
       ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
       ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
-      api-port: ${{ vars.SERVER_PORT }}
+      api-port: ${{ vars.API_PORT }}
       tmdb-api-host: ${{ vars.API_SERVER }}
     secrets: inherit
 #      TMDB_API_ACCESS_TOKEN: ${{ secrets.TMDB_API_ACCESS_TOKEN }}

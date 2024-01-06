@@ -6,10 +6,13 @@ on:
       image:
         required: true
         type: string
-      ssh-user:
+      ssh-host:
         required: true
         type: string
       ssh-port:
+        required: true
+        type: string
+      ssh-user:
         required: true
         type: string
       api-port:
@@ -22,9 +25,6 @@ on:
       TMDB_API_ACCESS_TOKEN:
         required: true
         description: TheMovieDatabase Access Token
-      PUBLISH_SERVER_HOST:
-        required: true
-        description: Remote SSH server host
       PUBLISH_SSH_PRIVATE_KEY:
         required: true
         description: Private SSH key with access to SSH server
@@ -37,7 +37,7 @@ jobs:
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v1.0.2
         with:
-          host: ${{ secrets.PUBLISH_SERVER_HOST }}
+          host: ${{ inputs.ssh-host }}
           username: ${{ inputs.ssh-user }}
           port: ${{ inputs.ssh-port }}
           key: ${{ secrets.PUBLISH_SSH_PRIVATE_KEY }}
