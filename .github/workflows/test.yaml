@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Pass the received secret to an action
-        uses: davehornigan/movies-api/.github/workflows/deploy.yaml
+        uses: davehornigan/movies-api/.github/workflows/deploy.yaml@master
         with:
           image: ghcr.io/davehornigan/movies-api:1.0.11
           ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
