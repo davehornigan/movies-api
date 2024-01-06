@@ -11,10 +11,10 @@ on:
         type: string
       ssh-port:
         required: true
-        type: number
+        type: string
       api-port:
         required: true
-        type: number
+        type: string
       tmdb-api-host:
         required: true
         type: string
