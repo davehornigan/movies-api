@@ -7,14 +7,12 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Pass the received secret to an action
-        uses: davehornigan/movies-api/.github/workflows/deploy.yaml@master
-        with:
-          image: ghcr.io/davehornigan/movies-api:1.0.11
-          ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
-          ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
-          api-port: ${{ vars.SERVER_PORT }}
-          tmdb-api-host: ${{ vars.API_SERVER }}
-        secrets: inherit
+    name: Pass the received secret to an action
+    uses: davehornigan/movies-api/.github/workflows/deploy.yaml@master
+    with:
+      image: ghcr.io/davehornigan/movies-api:1.0.11
+      ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
+      ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
+      api-port: ${{ vars.SERVER_PORT }}
+      tmdb-api-host: ${{ vars.API_SERVER }}
+    secrets: inherit
