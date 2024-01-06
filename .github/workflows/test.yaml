@@ -22,7 +22,9 @@ jobs:
         uses: docker/metadata-action@v5
         with:
           context: git
-          images: ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+          images: |
+            ${{ env.REGISTRY }}/${{ env.IMAGE_NAME }}
+            davehornigan/movies-api
           tags: |
             type=ref,event=branch
             type=ref,event=pr
