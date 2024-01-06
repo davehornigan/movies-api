@@ -3,7 +3,7 @@ name: Deploy image to server
 on:
   workflow_call:
     inputs:
-      image:
+      images:
         required: true
         type: string
       ssh-host:
@@ -49,5 +49,5 @@ jobs:
             echo "TMDB_API_SERVER=${{ inputs.tmdb-api-host }}" >> .env
             echo "TMDB_API_ACCESS_TOKEN=${{ secrets.TMDB_API_ACCESS_TOKEN }}" >> .env
             docker pull ${{ inputs.image }}
-            yq e '.services.movies.image = "${{ inputs.image }}"' -i docker-compose.yaml
+            yq e '.services.movies.image = "${{ inputs.images }}"' -i docker-compose.yaml
             docker compose up movies -d --force-recreate
