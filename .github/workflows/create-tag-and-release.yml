@@ -44,7 +44,6 @@ jobs:
         file-path: schema/openapi.v3.json
         commit-msg: "Updated version"
         github-token: ${{ secrets.GITHUB_TOKEN }}
-    - uses: actions/checkout@v4
 
     - name: Bump version and push tag
       id: tag_version
