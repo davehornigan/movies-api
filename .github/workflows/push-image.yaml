@@ -20,7 +20,7 @@ jobs:
       id-token: write
       packages: write
     outputs:
-      image-tag: ${{ steps.meta.outputs.tags[0] }}
+      image-tags: ${{ steps.meta.outputs.tags }}
 
     runs-on: ubuntu-latest
     steps:
@@ -71,7 +71,7 @@ jobs:
     name: Pass the received secret to an action
     uses: ./.github/workflows/deploy.yaml
     with:
-      image: ${{ needs.build-and-push-image.outputs.image-tag }}
+      images: ${{ needs.build-and-push-image.outputs.image-tags }}
       ssh-host: ${{ vars.PUBLISH_SERVER_HOST }}
       ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
       ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}

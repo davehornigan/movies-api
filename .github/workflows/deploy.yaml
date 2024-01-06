@@ -34,7 +34,7 @@ jobs:
 
     steps:
       - run: |
-          echo ${{ inputs.image }}
+          echo '${{ inputs.images }}'
       - uses: actions/checkout@v2
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v1.0.2
