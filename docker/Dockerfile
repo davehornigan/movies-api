@@ -11,6 +11,6 @@ RUN go build -o /app/build/api /app/cmd/api/main.go
 FROM scratch as api
 
 WORKDIR /app
-COPY --from=build /app/build/api /app/.env /app/
+COPY --from=build /app/build/api /app/
 
 CMD ["/app/api"]
