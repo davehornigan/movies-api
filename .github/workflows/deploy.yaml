@@ -37,9 +37,9 @@ jobs:
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@v1.0.2
         with:
-          host: ${{ secrets.ssh-host }}
-          username: ${{ secrets.ssh-user }}
-          port: ${{ secrets.ssh-port }}
+          host: ${{ secrets.PUBLISH_SERVER_HOST }}
+          username: ${{ inputs.ssh-user }}
+          port: ${{ inputs.ssh-port }}
           key: ${{ secrets.PUBLISH_SSH_PRIVATE_KEY }}
           script: |
             cd /opt/movies
