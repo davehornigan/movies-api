@@ -51,7 +51,7 @@ jobs:
             echo "SERVER_PORT=${{ inputs.api-port }}" > .env
             echo "TMDB_API_SERVER=${{ inputs.tmdb-api-host }}" >> .env
             echo "TMDB_API_ACCESS_TOKEN=${{ secrets.TMDB_API_ACCESS_TOKEN }}" >> .env
-            docker pull ${{ inputs.image }}
+            docker pull "${images[0]}"
             yqTemplate=".services.movies.image = \"${images[0]}\""
             yq e "$yqTemplate" -i docker-compose.yaml
             docker compose up movies -d --force-recreate
