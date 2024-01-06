@@ -44,6 +44,7 @@ jobs:
         file-path: schema/openapi.v3.json
         commit-msg: "Updated version"
         github-token: ${{ secrets.GITHUB_TOKEN }}
+    - uses: actions/checkout@v4
 
     - name: Create a GitHub release
       if: ${{ github.event_name != 'pull_request' }}
