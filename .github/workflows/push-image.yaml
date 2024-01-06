@@ -8,8 +8,6 @@ on:
     branches:
       - 'releases/**'
   push:
-    branches:
-      - 'releases/**'
     tags:
       - "**"
   pull_request:
