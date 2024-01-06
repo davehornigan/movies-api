@@ -5,6 +5,10 @@ on:
     branches:
       - master
 
+env:
+  REGISTRY: ghcr.io
+  IMAGE_NAME: ${{ github.repository }}
+
 jobs:
   meta:
     name: Meta
@@ -29,8 +33,10 @@ jobs:
   test:
     name: Pass the received secret to an action
     uses: ./.github/workflows/deploy.yaml
+    needs:
+      - meta
     with:
-      image: ghcr.io/davehornigan/movies-api:1.0.11
+      image: ${{ needs.meta.outputs.image-tag }}
       ssh-host: ${{ vars.PUBLISH_SERVER_HOST }}
       ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
       ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
