@@ -14,7 +14,7 @@ jobs:
     name: Meta
     runs-on: ubuntu-latest
     outputs:
-      image-tag: ${{ steps.meta.outputs.tags }}
+      image-tag: ${{ toJSON(steps.meta.outputs.tags) }}
     steps:
       - uses: actions/checkout@v4
       - name: Extract metadata (tags, labels) for Docker
