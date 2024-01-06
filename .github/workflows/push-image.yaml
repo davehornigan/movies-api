@@ -19,6 +19,8 @@ jobs:
       contents: write
       id-token: write
       packages: write
+    outputs:
+      image-tags: ${{ steps.meta.outputs.tags }}
 
     runs-on: ubuntu-latest
     steps:
@@ -61,3 +63,18 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+  deploy:
+    if: ${{ github.event_name != 'pull_request' && needs.build-and-push-image.outputs.image-tags != '' }}
+    needs:
+      - build-and-push-image
+    name: Pass the received secret to an action
+    uses: ./.github/workflows/deploy.yaml
+    with:
+      images: ${{ needs.build-and-push-image.outputs.image-tags }}
+      ssh-host: ${{ vars.PUBLISH_SERVER_HOST }}
+      ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
+      ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
+      api-port: ${{ vars.API_PORT }}
+      tmdb-api-host: ${{ vars.TMDB_API_SERVER }}
+    secrets: inherit
