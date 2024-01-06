@@ -19,6 +19,8 @@ jobs:
       contents: write
       id-token: write
       packages: write
+    outputs:
+      image-tag: ${{ steps.meta.outputs.tags[0] }}
 
     runs-on: ubuntu-latest
     steps:
@@ -61,3 +63,17 @@ jobs:
           push: ${{ github.event_name != 'pull_request' }}
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.labels }}
+
+#  deploy:
+#    needs:
+#      - build-and-push-image
+#    name: Pass the received secret to an action
+#    uses: ./.github/workflows/deploy.yaml
+#    with:
+#      image: ghcr.io/davehornigan/movies-api:1.0.11
+#      ssh-host: ${{ vars.PUBLISH_SERVER_HOST }}
+#      ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
+#      ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
+#      api-port: ${{ vars.API_PORT }}
+#      tmdb-api-host: ${{ vars.TMDB_API_SERVER }}
+#    secrets: inherit
