@@ -144,7 +144,7 @@
           }
         },
         {
-          "name": "voteAverage.gte",
+          "name": "rating.gte",
           "in": "query",
           "required": false,
           "schema": {
@@ -154,7 +154,7 @@
           }
         },
         {
-          "name": "voteAverage.lte",
+          "name": "rating.lte",
           "in": "query",
           "required": false,
           "schema": {
@@ -688,7 +688,7 @@
       },
       "MovieRating": {
         "type": "number",
-        "format": "double",
+        "format": "float",
         "example": 9.1
       },
       "ImagePath": {
@@ -912,7 +912,7 @@
               },
               "popularity": {
                 "type": "number",
-                "format": "double"
+                "format": "float"
               },
               "countries": {
                 "type": "array",

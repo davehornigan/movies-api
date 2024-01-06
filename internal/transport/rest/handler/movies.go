@@ -135,7 +135,7 @@ func BuildMovieList(resp *tmdb.MoviePaginated) apiserver.MovieListResponse {
 			Poster:      movie.PosterPath,
 			Backdrop:    movie.BackdropPath,
 			GenreIds:    movie.GenreIds,
-			Rating:      float64(*movie.VoteAverage),
+			Rating:      *movie.VoteAverage,
 			ReleaseDate: releaseDate,
 			Title:       *movie.Title,
 		})
