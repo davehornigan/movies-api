@@ -30,6 +30,7 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         dry_run: true
+        tag_prefix: ''
 
     - name: Update version in Swagger Documentation
       if: ${{ github.event_name != 'pull_request' }}
@@ -57,6 +58,6 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       uses: ncipollo/release-action@v1
       with:
-        tag: ${{ steps.tag_version.outputs.new_tag }}
-        name: Release ${{ steps.tag_version.outputs.new_tag }}
+        tag: ${{ steps.calculate_version.outputs.new_tag }}
+        name: Release ${{ steps.calculate_version.outputs.new_tag }}
         body: ${{ steps.tag_version.outputs.changelog }}
