@@ -321,7 +321,7 @@
           "explode": false
         },
         {
-          "name": "withRuntime.gte",
+          "name": "withDuration.gte",
           "in": "query",
           "required": false,
           "schema": {
@@ -330,7 +330,7 @@
           }
         },
         {
-          "name": "withRuntime.lte",
+          "name": "withDuration.lte",
           "in": "query",
           "required": false,
           "schema": {
