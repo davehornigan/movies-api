@@ -1,0 +1,55 @@
+name: Deploy image to server
+
+on:
+  workflow_call:
+    inputs:
+      images:
+        required: true
+        type: string
+      ssh-host:
+        required: true
+        type: string
+      ssh-port:
+        required: true
+        type: string
+      ssh-user:
+        required: true
+        type: string
+      api-port:
+        required: true
+        type: string
+      tmdb-api-host:
+        required: true
+        type: string
+    secrets:
+      TMDB_API_ACCESS_TOKEN:
+        required: true
+        description: TheMovieDatabase Access Token
+      PUBLISH_SSH_PRIVATE_KEY:
+        required: true
+        description: Private SSH key with access to SSH server
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - run: |
+          echo '${{ inputs.images }}'
+      - uses: actions/checkout@v2
+      - name: executing remote ssh commands
+        uses: appleboy/ssh-action@v1.0.2
+        with:
+          host: ${{ inputs.ssh-host }}
+          username: ${{ inputs.ssh-user }}
+          port: ${{ inputs.ssh-port }}
+          key: ${{ secrets.PUBLISH_SSH_PRIVATE_KEY }}
+          script: |
+            cd /opt/movies
+            IFS=$'\n' images=(${{ inputs.images }})
+            echo "SERVER_PORT=${{ inputs.api-port }}" > .env
+            echo "TMDB_API_SERVER=${{ inputs.tmdb-api-host }}" >> .env
+            echo "TMDB_API_ACCESS_TOKEN=${{ secrets.TMDB_API_ACCESS_TOKEN }}" >> .env
+            docker pull "${images[0]}"
+            yqTemplate=".services.movies.image = \"${images[0]}\""
+            yq e "$yqTemplate" -i docker-compose.yaml
+            docker compose up movies -d --force-recreate

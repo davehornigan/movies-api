@@ -3177,6 +3177,14 @@
                         }
                     },
                     {
+                        "name": "certification.gte",
+                        "in": "query",
+                        "description": "Filter and only include movies that have a certification that is greater than or equal to the specified value.",
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
                         "name": "include_adult",
                         "in": "query",
                         "description": "A filter and include or exclude adult movies.",
@@ -3211,6 +3219,7 @@
                             "maximum": 1000,
                             "minimum": 1,
                             "type": "integer",
+                            "format": "int32",
                             "default": 1
                         }
                     },
@@ -3219,7 +3228,8 @@
                         "in": "query",
                         "description": "A filter to limit the results to a specific primary release year.",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3264,7 +3274,8 @@
                         "description": "Filter and only include movies that have a vote count that is greater or equal to the specified value.",
                         "schema": {
                             "minimum": 0,
-                            "type": "integer"
+                            "type": "number",
+                            "format": "float"
                         }
                     },
                     {
@@ -3273,7 +3284,8 @@
                         "description": "Filter and only include movies that have a vote count that is less than or equal to the specified value.",
                         "schema": {
                             "minimum": 1,
-                            "type": "integer"
+                            "type": "number",
+                            "format": "float"
                         }
                     },
                     {
@@ -3282,7 +3294,8 @@
                         "description": "Filter and only include movies that have a rating that is greater or equal to the specified value.",
                         "schema": {
                             "minimum": 0,
-                            "type": "number"
+                            "type": "number",
+                            "format": "float"
                         }
                     },
                     {
@@ -3291,7 +3304,8 @@
                         "description": "Filter and only include movies that have a rating that is less than or equal to the specified value.",
                         "schema": {
                             "minimum": 0,
-                            "type": "number"
+                            "type": "number",
+                            "format": "float"
                         }
                     },
                     {
@@ -3347,7 +3361,8 @@
                         "in": "query",
                         "description": "A filter to limit the results to a specific year (looking at all release dates).",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3363,7 +3378,8 @@
                         "in": "query",
                         "description": "Filter and only inlcude movies that have a runtime that is greater or equal to a value.",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3371,7 +3387,8 @@
                         "in": "query",
                         "description": "Filter and only inlcude movies that have a runtime that is less than or equal to a value.",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3381,7 +3398,8 @@
                         "schema": {
                             "maximum": 6,
                             "minimum": 1,
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3585,7 +3603,8 @@
                         "in": "query",
                         "description": "Filter and only include TV shows that have a original air date year that equal to the specified value. Can be used in conjunction with the \"include_null_first_air_dates\" filter if you want to include items with no air date.",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3603,7 +3622,8 @@
                         "description": "Specify the page of results to query.",
                         "schema": {
                             "type": "integer",
-                            "default": 1
+                            "default": 1,
+                            "format": "int32"
                         }
                     },
                     {
@@ -3621,16 +3641,38 @@
                         "description": "Filter and only include movies that have a rating that is greater or equal to the specified value.",
                         "schema": {
                             "minimum": 0,
-                            "type": "number"
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "vote_average.lte",
+                        "in": "query",
+                        "description": "Filter and only include movies that have a rating that is less or equal to the specified value.",
+                        "schema": {
+                            "minimum": 0,
+                            "type": "number",
+                            "format": "float"
                         }
                     },
                     {
                         "name": "vote_count.gte",
                         "in": "query",
+                        "description": "Filter and only include movies that have a rating that is greater than or equal to the specified value.",
+                        "schema": {
+                            "minimum": 0,
+                            "type": "number",
+                            "format": "float"
+                        }
+                    },
+                    {
+                        "name": "vote_count.lte",
+                        "in": "query",
                         "description": "Filter and only include movies that have a rating that is less than or equal to the specified value.",
                         "schema": {
                             "minimum": 0,
-                            "type": "integer"
+                            "type": "number",
+                            "format": "float"
                         }
                     },
                     {
@@ -3662,7 +3704,8 @@
                         "in": "query",
                         "description": "Filter and only inlcude movies that have a runtime that is greater or equal to a value.",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
@@ -3670,7 +3713,8 @@
                         "in": "query",
                         "description": "Filter and only inlcude movies that have a runtime that is less than or equal to a value.",
                         "schema": {
-                            "type": "integer"
+                            "type": "integer",
+                            "format": "int32"
                         }
                     },
                     {
