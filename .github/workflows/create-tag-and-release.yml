@@ -40,6 +40,7 @@ jobs:
       if: ${{ github.event_name != 'pull_request' }}
       uses: test-room-7/action-update-file@v1
       with:
+        branch: ${{ github.ref }}
         file-path: schema/openapi.v3.json
         commit-msg: "Updated version"
         github-token: ${{ secrets.GITHUB_TOKEN }}
