@@ -12,6 +12,7 @@ jobs:
       - name: Pass the received secret to an action
         uses: davehornigan/movies-api/.github/workflows/deploy.yaml
         with:
+          image: ghcr.io/davehornigan/movies-api:1.0.11
           ssh-user: ${{ vars.PUBLISH_SERVER_USER }}
           ssh-port: ${{ vars.PUBLISH_SERVER_PORT }}
           api-port: ${{ vars.SERVER_PORT }}
