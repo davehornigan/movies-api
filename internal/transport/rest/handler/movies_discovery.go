@@ -2,7 +2,6 @@ package handler
 
 import (
 	"encoding/json"
-	"fmt"
 	apiserver "github.com/davehornigan/movies-api/generated/api-server"
 	"github.com/davehornigan/movies-api/generated/tmdb"
 	"github.com/labstack/echo/v4"
@@ -11,11 +10,19 @@ import (
 	"strings"
 )
 
-var acceptedSortingOptions = map[apiserver.SortOption]bool{
-	apiserver.Popularity:  true,
-	apiserver.Rating:      true,
-	apiserver.ReleaseDate: true,
-	apiserver.Title:       true,
+var discoverySortingMap = map[apiserver.SortOrder]map[apiserver.SortOption]tmdb.GetDiscoverMoviePaginatedParamsSortBy{
+	apiserver.Asc: {
+		apiserver.Popularity:         tmdb.GetDiscoverMoviePaginatedParamsSortByPopularityAsc,
+		apiserver.PrimaryReleaseDate: tmdb.GetDiscoverMoviePaginatedParamsSortByPrimaryReleaseDateAsc,
+		apiserver.Rating:             tmdb.GetDiscoverMoviePaginatedParamsSortByVoteAverageAsc,
+		apiserver.Revenue:            tmdb.GetDiscoverMoviePaginatedParamsSortByRevenueAsc,
+	},
+	apiserver.Desc: {
+		apiserver.Popularity:         tmdb.GetDiscoverMoviePaginatedParamsSortByPopularityDesc,
+		apiserver.PrimaryReleaseDate: tmdb.GetDiscoverMoviePaginatedParamsSortByPrimaryReleaseDateDesc,
+		apiserver.Rating:             tmdb.GetDiscoverMoviePaginatedParamsSortByVoteAverageDesc,
+		apiserver.Revenue:            tmdb.GetDiscoverMoviePaginatedParamsSortByRevenueDesc,
+	},
 }
 
 func (h *Handler) GetDiscoverMovies(c echo.Context, params apiserver.GetDiscoverMoviesParams) error {
@@ -74,15 +81,19 @@ func (h *Handler) GetDiscoverMovies(c echo.Context, params apiserver.GetDiscover
 }
 
 func getDiscoveryMovieSortBy(by *apiserver.SortBy) *tmdb.GetDiscoverMoviePaginatedParamsSortBy {
-	if by.Option == nil || acceptedSortingOptions[*by.Option] == false {
-		return nil
+	result := tmdb.GetDiscoverMoviePaginatedParamsSortByEmpty
+	if by.Option == nil {
+		return &result
 	}
 	order := apiserver.Desc
 	if by.Order != nil {
 		order = *by.Order
 	}
-	sort := fmt.Sprintf("%s.%s", *by.Option, order)
-	result := tmdb.GetDiscoverMoviePaginatedParamsSortBy(sort)
+
+	sortBy, ok := discoverySortingMap[order][*by.Option]
+	if ok {
+		result = sortBy
+	}
 
 	return &result
 }

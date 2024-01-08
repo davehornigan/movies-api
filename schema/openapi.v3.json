@@ -1000,8 +1000,8 @@
         "enum": [
           "popularity",
           "rating",
-          "release_date",
-          "title"
+          "primaryReleaseDate",
+          "revenue"
         ]
       },
       "SortOrder": {
