@@ -37,7 +37,7 @@ jobs:
           echo '${{ inputs.images }}'
       - uses: actions/checkout@v4
       - name: executing remote ssh commands
-        uses: appleboy/ssh-action@v1.0.2
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ inputs.ssh-host }}
           username: ${{ inputs.ssh-user }}
