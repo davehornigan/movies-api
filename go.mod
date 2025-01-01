@@ -3,7 +3,7 @@ module github.com/davehornigan/movies-api
 go 1.20
 
 require (
-	github.com/deepmap/oapi-codegen v1.16.2
+	github.com/deepmap/oapi-codegen v1.16.3
 	github.com/labstack/echo/v4 v4.11.2
 	github.com/oapi-codegen/runtime v1.0.0
 	github.com/sirupsen/logrus v1.9.3
@@ -12,7 +12,6 @@ require (
 )
 
 require (
-	github.com/apapsch/go-jsonmerge/v2 v2.0.0 // indirect
 	github.com/fsnotify/fsnotify v1.6.0 // indirect
 	github.com/golang-jwt/jwt v3.2.2+incompatible // indirect
 	github.com/google/uuid v1.4.0 // indirect
